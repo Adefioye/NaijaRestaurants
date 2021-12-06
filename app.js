@@ -30,9 +30,9 @@ app.set("views", path.join(__dirname, "views"));
 // Setting up middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-
 app.use("/campgrounds", campgrounds);
 app.use("/campgrounds/:id/reviews", reviews);
+app.use(express.static(path.join(__dirname, "public")));
 
 // Setting up routes to resources
 app.get("/", (req, res) => {
