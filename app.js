@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const app = express();
 const path = require("path");
 const ejsMate = require("ejs-mate");
+const session = require("express-session");
+const flash = require("connect-flash");
 const methodOverride = require("method-override");
 const campgrounds = require("./routes/campgrounds");
 const reviews = require("./routes/reviews");
@@ -30,6 +32,29 @@ app.set("views", path.join(__dirname, "views"));
 // Setting up middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+
+// Setting up a session middleware
+const sessionConfig = {
+  secret: "thisisnotagoodsecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  },
+};
+app.use(session(sessionConfig));
+app.use(flash());
+
+// Middleware for passing flash message to express routes
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
+
+// Setting up routes and static files middleware
 app.use("/campgrounds", campgrounds);
 app.use("/campgrounds/:id/reviews", reviews);
 app.use(express.static(path.join(__dirname, "public")));
