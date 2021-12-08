@@ -6,9 +6,13 @@ const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
-const campgrounds = require("./routes/campgrounds");
-const reviews = require("./routes/reviews");
+const campgroundRouter = require("./routes/campgrounds");
+const reviewRouter = require("./routes/reviews");
+const userRouter = require("./routes/users");
 const ExpressError = require("./utils/ExpressError");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const User = require("./models/user");
 
 // Set up database connection
 async function main() {
@@ -47,16 +51,27 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+// Setting up passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Middleware for passing flash message to express routes
 app.use((req, res, next) => {
+  res.locals.signedInUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
 });
 
 // Setting up routes and static files middleware
-app.use("/campgrounds", campgrounds);
-app.use("/campgrounds/:id/reviews", reviews);
+app.use("/", userRouter);
+app.use("/campgrounds", campgroundRouter);
+app.use("/campgrounds/:id/reviews", reviewRouter);
 app.use(express.static(path.join(__dirname, "public")));
 
 // Setting up routes to resources
