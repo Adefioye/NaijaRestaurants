@@ -33,6 +33,7 @@
     </div>
   </div>
   <div class="col-6">
+    <% if(signedInUser) {%>
     <form
       action="/campgrounds/<%= campground._id %>/reviews"
       method="POST"
@@ -66,7 +67,7 @@
       </div>
       <button class="btn btn-success">Submit</button>
     </form>
-    <% for (let review of campground.reviews) { %>
+    <% } %> <% for (let review of campground.reviews) { %>
     <div class="card mt-3">
       <div class="card-body">
         <h5 class="card-title">Rating: <%= review.rating %></h5>
