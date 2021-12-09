@@ -9,6 +9,10 @@ const campgroundSchema = new Schema({
   image: String,
   location: String,
   reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 // Always set up the POST middleware before instantiating the model class
