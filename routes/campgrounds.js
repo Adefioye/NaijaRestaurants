@@ -17,6 +17,10 @@ const {
   deleteCampground,
 } = require("../controllers/campgrounds");
 
+const multer = require("multer");
+const { storage } = require("../cloudinary/index");
+const upload = multer({ storage });
+
 // Creating Campground routes
 router.get("/", catchAsync(allCampgrounds));
 
@@ -34,9 +38,15 @@ router.get(
 router.post(
   "/",
   isLoggedIn,
+  upload.array("image"),
   validateCampgroundSchema,
   catchAsync(createNewCampground)
 );
+
+// router.post("/", upload.array("image"), (req, res) => {
+//   console.log(req.files);
+//   res.send("It worked");
+// });
 
 router.put(
   "/:id",

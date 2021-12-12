@@ -36,8 +36,11 @@ module.exports.editCampgroundDetails = async (req, res) => {
 module.exports.createNewCampground = async (req, res, next) => {
   // if (!req.body.campground)
   //   next(new ExpressError("Invalid Data Input for Campground", 400));
-
   const newCamp = await Campground(req.body.campground);
+  newCamp.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   newCamp.author = req.user._id;
   await newCamp.save();
   req.flash("success", "New Campground Successfully Created!");

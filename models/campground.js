@@ -6,7 +6,12 @@ const campgroundSchema = new Schema({
   title: String,
   price: Number,
   description: String,
-  image: String,
+  images: [
+    {
+      url: String,
+      filename: String,
+    },
+  ],
   location: String,
   reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
   author: {
