@@ -52,6 +52,7 @@ router.put(
   "/:id",
   isLoggedIn,
   isAuthor,
+  upload.array("image"),
   validateCampgroundSchema,
   catchAsync(updateCampgroundDetails)
 );

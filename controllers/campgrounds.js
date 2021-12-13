@@ -29,7 +29,6 @@ module.exports.editCampgroundDetails = async (req, res) => {
     req.flash("error", "Campground Not Found!");
     return res.redirect("/campgrounds");
   }
-
   res.render("campgrounds/edit", { campground });
 };
 
@@ -53,6 +52,12 @@ module.exports.updateCampgroundDetails = async (req, res) => {
     id,
     req.body.campground
   );
+  const imgs = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
+  updatedCampground.images.push(...imgs);
+  updatedCampground.save();
   req.flash("success", "Campground Successfully Updated!");
   res.redirect(`/campgrounds/${updatedCampground._id}`);
 };
