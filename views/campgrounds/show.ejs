@@ -1,6 +1,16 @@
 <% layout('./layouts/boilerplate') -%>
+
+<script>
+  const mapToken = "<%- process.env.MAPBOX_TOKEN %>"
+  const campground = <%- JSON.stringify(campground) %>
+</script>
+
+
+
 <div class="row">
   <div class="col-6">
+    <!-- For Injecting the MAP into SHOWPAGE -->
+    <div id="map" class="mb-3" style="height: 400px;"></div>
     <div class="card">
       <div
         id="carouselExampleControls"
@@ -163,3 +173,6 @@
 <footer>
   <a href="/campgrounds">All Campgrounds</a>
 </footer>
+
+
+<script src="/javascripts/showMapPage.js"></script>
