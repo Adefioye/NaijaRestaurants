@@ -68,7 +68,6 @@ passport.deserializeUser(User.deserializeUser());
 
 // Middleware for passing flash message to express routes
 app.use((req, res, next) => {
-  console.log(req.query);
   res.locals.signedInUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
