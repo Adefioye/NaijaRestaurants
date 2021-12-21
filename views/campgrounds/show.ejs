@@ -9,8 +9,6 @@
 
 <div class="row">
   <div class="col-6">
-    <!-- For Injecting the MAP into SHOWPAGE -->
-    <div id="map" class="mb-3" style="height: 400px;"></div>
     <div class="card">
       <div
         id="carouselExampleControls"
@@ -76,6 +74,8 @@
   </div>
 
   <div class="col-6">
+    <!-- For Injecting the MAP into SHOWPAGE -->
+    <div id="map" class="mb-3" style="height: 300px;"></div>
     <% if(signedInUser) {%>
     <form
       action="/campgrounds/<%= campground._id %>/reviews"
