@@ -17,6 +17,7 @@ const ExpressError = require("./utils/ExpressError");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user");
+const mongoSanitize = require("express-mongo-sanitize");
 
 // Set up database connection
 async function main() {
@@ -40,6 +41,7 @@ app.set("views", path.join(__dirname, "views"));
 // Setting up middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
+app.use(mongoSanitize());
 
 // Setting up a session middleware
 const sessionConfig = {
@@ -66,6 +68,7 @@ passport.deserializeUser(User.deserializeUser());
 
 // Middleware for passing flash message to express routes
 app.use((req, res, next) => {
+  console.log(req.query);
   res.locals.signedInUser = req.user;
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
