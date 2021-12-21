@@ -23,7 +23,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 const seedDB = async () => {
   await Campground.deleteMany({});
   for (let i = 0; i < 50; i++) {
-    const { city, state } = sample(Cities);
+    const { city, state, latitude, longitude } = sample(Cities);
     const descriptor = sample(descriptors);
     const place = sample(places);
     const price = Math.floor(Math.random() * 30) + 10;
@@ -32,6 +32,7 @@ const seedDB = async () => {
       location: `${city}, ${state}`,
       title: `${descriptor} ${place}`,
       image: "https://source.unsplash.com/collection/483251",
+      geometry: { type: "Point", coordinates: [longitude, latitude] },
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime eius aliquam, nesciunt distinctio fuga necessitatibus adipisci voluptas maiores soluta quae nihil repudiandae, asperiores hic, optio sit quibusdam eum repellendus at.",
       price,

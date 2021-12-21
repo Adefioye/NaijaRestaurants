@@ -16,6 +16,6 @@ The purpose of the project is to allow for the creation of campground with speci
 
 ## To DOs
 
-- Reseeding the database and providing option to add and delete images on the database and on cloudinary. Lastly create a better UI for the image browser.
-
+- Validating the images(meaning, submission should not be possible without an image)
+- Handle errors relating to forward geocoding
 -
