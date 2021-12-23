@@ -18,4 +18,4 @@ The purpose of the project is to allow for the creation of campground with speci
 
 - Validating the images(meaning, submission should not be possible without an image)
 - Handle errors relating to forward geocoding
--
+- To repurpose yelpcamp codebase for sthelse I dont know yet
