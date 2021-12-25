@@ -52,7 +52,6 @@
         <li class="list-group-item fw-bold">
           Submitted by <%= campground.author.username %>
         </li>
-        <li class="list-group-item fw-bold">$<%= campground.price %>/Night</li>
       </ul>
       <% if (signedInUser && signedInUser.equals(campground.author)) {%>
       <div class="card-body">
@@ -171,7 +170,7 @@
   </div>
 </div>
 <footer>
-  <a href="/campgrounds">All Campgrounds</a>
+  <a href="/campgrounds">All Restaurants</a>
 </footer>
 
 
