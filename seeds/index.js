@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Cities = require("./Cities1");
 // const { descriptors, places } = require("./seedHelpers");
-const Campground = require("../models/campground");
+const Restaurant = require("../models/restaurant");
 // Set up database connection
 async function main() {
   await mongoose.connect("mongodb://localhost:27017/yelpCamp");
@@ -16,7 +16,7 @@ main()
     console.log(err);
   });
 
-const sample = (array) => array[Math.floor(Math.random() * array.length)];
+// const sample = (array) => array[Math.floor(Math.random() * array.length)];
 // console.log(Cities.length);
 // console.log(sample(Cities));
 
@@ -46,10 +46,10 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 //     });
 
 const seedDB = async () => {
-  await Campground.deleteMany({});
+  await Restaurant.deleteMany({});
   for (let city of Cities) {
     const { Name, Address, Description, latitude, longitude } = city;
-    const newCamp = new Campground({
+    const restaurant = new Restaurant({
       author: "61b13325f855585c98cdff29",
       location: `${Address}`,
       title: `${Name}`,
@@ -68,7 +68,7 @@ const seedDB = async () => {
       ],
     });
 
-    await newCamp.save();
+    await restaurant.save();
   }
 };
 

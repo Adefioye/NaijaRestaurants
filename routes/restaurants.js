@@ -4,43 +4,43 @@ const catchAsync = require("../utils/CatchAsync");
 const {
   isLoggedIn,
   isAuthor,
-  validateCampgroundSchema,
+  validateRestaurantSchema,
 } = require("../middleware");
 
 const {
-  allCampgrounds,
-  renderNewCamproundForm,
-  showCampground,
-  editCampgroundDetails,
-  createNewCampground,
-  updateCampgroundDetails,
-  deleteCampground,
-} = require("../controllers/campgrounds");
+  allRestaurants,
+  renderNewRestaurantForm,
+  showRestaurant,
+  editRestaurantDetails,
+  createNewRestaurant,
+  updateRestaurantDetails,
+  deleteRestaurant,
+} = require("../controllers/restaurants");
 
 const multer = require("multer");
 const { storage } = require("../cloudinary/index");
 const upload = multer({ storage });
 
 // Creating Campground routes
-router.get("/", catchAsync(allCampgrounds));
+router.get("/", catchAsync(allRestaurants));
 
-router.get("/new", isLoggedIn, renderNewCamproundForm);
+router.get("/new", isLoggedIn, renderNewRestaurantForm);
 
-router.get("/:id", catchAsync(showCampground));
+router.get("/:id", catchAsync(showRestaurant));
 
 router.get(
   "/:id/edit",
   isLoggedIn,
   isAuthor,
-  catchAsync(editCampgroundDetails)
+  catchAsync(editRestaurantDetails)
 );
 
 router.post(
   "/",
   isLoggedIn,
   upload.array("image"),
-  validateCampgroundSchema,
-  catchAsync(createNewCampground)
+  validateRestaurantSchema,
+  catchAsync(createNewRestaurant)
 );
 
 // router.post("/", upload.array("image"), (req, res) => {
@@ -53,10 +53,10 @@ router.put(
   isLoggedIn,
   isAuthor,
   upload.array("image"),
-  validateCampgroundSchema,
-  catchAsync(updateCampgroundDetails)
+  validateRestaurantSchema,
+  catchAsync(updateRestaurantDetails)
 );
 
-router.delete("/:id", isLoggedIn, isAuthor, catchAsync(deleteCampground));
+router.delete("/:id", isLoggedIn, isAuthor, catchAsync(deleteRestaurant));
 
 module.exports = router;

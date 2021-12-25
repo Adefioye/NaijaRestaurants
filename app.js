@@ -10,7 +10,7 @@ const ejsMate = require("ejs-mate");
 const session = require("express-session");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
-const campgroundRouter = require("./routes/campgrounds");
+const restaurantRouter = require("./routes/restaurants");
 const reviewRouter = require("./routes/reviews");
 const userRouter = require("./routes/users");
 const ExpressError = require("./utils/ExpressError");
@@ -128,8 +128,8 @@ app.use((req, res, next) => {
 
 // Setting up routes and static files middleware
 app.use("/", userRouter);
-app.use("/campgrounds", campgroundRouter);
-app.use("/campgrounds/:id/reviews", reviewRouter);
+app.use("/restaurants", restaurantRouter);
+app.use("/restaurants/:id/reviews", reviewRouter);
 app.use(express.static(path.join(__dirname, "public")));
 
 // Setting up routes to resources
@@ -144,7 +144,7 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;
   if (!err.message) err.message = "OH NO! Something went wrong!";
-  res.status(statusCode).render("campgrounds/error", { err });
+  res.status(statusCode).render("restaurants/error", { err });
 });
 
 app.listen(3000, () => {

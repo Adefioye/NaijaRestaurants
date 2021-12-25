@@ -1,7 +1,7 @@
-const Campground = require("./models/campground");
+const Restaurant = require("./models/restaurant");
 const Review = require("./models/review");
 const ExpressError = require("./utils/ExpressError");
-const { campgroundSchema, reviewSchema } = require("./Schema");
+const { restaurantSchema, reviewSchema } = require("./Schema");
 
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
@@ -14,10 +14,10 @@ module.exports.isLoggedIn = (req, res, next) => {
 
 module.exports.isAuthor = async (req, res, next) => {
   const { id } = req.params;
-  const campground = await Campground.findById(id);
-  if (!campground.author.equals(req.user._id)) {
+  const restaurant = await Restaurant.findById(id);
+  if (!restaurant.author.equals(req.user._id)) {
     req.flash("error", "You do not have permission to do that!");
-    return res.redirect(`/campgrounds/${id}`);
+    return res.redirect(`/restaurants/${id}`);
   }
   next();
 };
@@ -27,14 +27,14 @@ module.exports.isReviewAuthor = async (req, res, next) => {
   const review = await Review.findById(reviewId);
   if (!review.author.equals(req.user._id)) {
     req.flash("error", "You do not have permission to do that!");
-    return res.redirect(`/campgrounds/${id}`);
+    return res.redirect(`/restaurants/${id}`);
   }
   next();
 };
 
 // Create validateSchema function for POST and PUT request for reusability
-module.exports.validateCampgroundSchema = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
+module.exports.validateRestaurantSchema = (req, res, next) => {
+  const { error } = restaurantSchema.validate(req.body);
   if (error) {
     const message = error.details.map((el) => el.message).join(",");
     next(new ExpressError(message, 400));
