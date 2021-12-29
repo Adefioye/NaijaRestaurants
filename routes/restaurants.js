@@ -22,7 +22,10 @@ const { storage } = require("../cloudinary/index");
 const upload = multer({ storage });
 
 // Creating Campground routes
+
 router.get("/", catchAsync(allRestaurants));
+
+router.get("/page/:page", catchAsync(allRestaurants));
 
 router.get("/new", isLoggedIn, renderNewRestaurantForm);
 

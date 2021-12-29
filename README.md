@@ -14,14 +14,16 @@ The purpose of the project is to allow for the creation of restaurants with spec
 
 -
 
-## To DOs(DONE)
+## To DOs (DONE)
 
 - Validating the images(meaning, submission should not be possible without an image)
 
-## To DOs(TO BE DONE)
+## To DOs (TO BE DONE)
 
 - Handle errors relating to forward geocoding
-- Clean up every remnant of campgrounds for restaurants
-- Remove `price` input from new and edit form
-- Remove `campground` word from flash messages
+- Clean up every remnant of campgrounds for restaurants [ALMOST DONE]
+- Remove `price` input from new and edit form [DONE]
+- Remove `campground` word from flash messages [DONE]
 - Change Original Image picture of all restaurants in seed data
+- Change background image of `NaijaRestaurants` homepage
+- Implement `Pagination` on `All restaurants` page

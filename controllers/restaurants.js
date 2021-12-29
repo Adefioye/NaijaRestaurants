@@ -4,8 +4,21 @@ const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocodingCLient = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 
 module.exports.allRestaurants = async (req, res) => {
-  const restaurants = await Restaurant.find({});
-  res.render("restaurants/index", { restaurants });
+  const restaurantsPerPage = 3;
+  const page = req.params.page || 1;
+  const numberOfRestaurantsSkipped = (page - 1) * restaurantsPerPage;
+  const numberOfRestaurants = await Restaurant.countDocuments().exec();
+  const restaurants = await Restaurant.find()
+    .limit(restaurantsPerPage)
+    .skip(numberOfRestaurantsSkipped)
+    .exec();
+  // const restaurants = await Restaurant.find({});
+  const props = {
+    restaurants: restaurants,
+    currentPage: page,
+    pages: Math.ceil(numberOfRestaurants / restaurantsPerPage),
+  };
+  res.render("restaurants/index", { ...props });
 };
 
 module.exports.renderNewRestaurantForm = (req, res) => {
@@ -32,7 +45,7 @@ module.exports.editRestaurantDetails = async (req, res) => {
     req.flash("error", "Restaurant Not Found!");
     return res.redirect("/restaurants");
   }
-  res.render("restaurants/edit", { Restaurant });
+  res.render("restaurants/edit", { restaurant });
 };
 
 module.exports.createNewRestaurant = async (req, res, next) => {
