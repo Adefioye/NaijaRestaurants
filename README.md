@@ -21,9 +21,7 @@ The purpose of the project is to allow for the creation of restaurants with spec
 ## To DOs (TO BE DONE)
 
 - Handle errors relating to forward geocoding
-- Clean up every remnant of campgrounds for restaurants [ALMOST DONE]
-- Remove `price` input from new and edit form [DONE]
-- Remove `campground` word from flash messages [DONE]
 - Change Original Image picture of all restaurants in seed data
 - Change background image of `NaijaRestaurants` homepage
-- Implement `Pagination` on `All restaurants` page
+- Implement `Pagination` on `All restaurants` page [DONE]
+- Deploy to HEROKU

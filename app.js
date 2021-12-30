@@ -19,6 +19,8 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user");
 const mongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
+const MongoStore = require("connect-mongo");
+const dbUrl = process.env.DB_URL;
 
 // Setup for helmet contentSecurityPolicy
 
@@ -48,8 +50,9 @@ const connectSrcUrls = [
 const fontSrcUrls = [];
 
 // Set up database connection
+// "mongodb://localhost:27017/naijaRestaurants"
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/yelpCamp");
+  await mongoose.connect("mongodb://localhost:27017/naijaRestaurants");
 }
 
 main()
@@ -96,7 +99,7 @@ app.use(
 // Setting up a session middleware
 const sessionConfig = {
   name: "my_session",
-  secret: "thisisnotagoodsecret",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -105,6 +108,11 @@ const sessionConfig = {
     expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
+  store: MongoStore.create({
+    mongoUrl: "mongodb://localhost:27017/naijaRestaurants",
+    secret: process.env.SECRET,
+    touchAfter: 24 * 3600,
+  }),
 };
 app.use(session(sessionConfig));
 app.use(flash());
