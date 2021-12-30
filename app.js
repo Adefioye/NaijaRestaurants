@@ -22,6 +22,7 @@ const helmet = require("helmet");
 const MongoStore = require("connect-mongo");
 const dbUrl =
   process.env.DB_URL || "mongodb://localhost:27017/naijaRestaurants";
+const port = process.env.PORT || 3000;
 
 // Setup for helmet contentSecurityPolicy
 
@@ -156,6 +157,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("restaurants/error", { err });
 });
 
-app.listen(3000, () => {
-  console.log("APP IS SERVED ON PORT 3000");
+app.listen(port, () => {
+  console.log(`APP IS SERVED ON PORT ${port}`);
 });
